@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mys.example.demo.dao.SysUserDao">
+  <resultMap id="BaseResultMap" type="com.mys.example.demo.pojo.SysUser">
+    <result column="UserId" jdbcType="CHAR" property="userid" />
+    <result column="LogName" jdbcType="VARCHAR" property="logname" />
+    <result column="LogPwd" jdbcType="VARCHAR" property="logpwd" />
+    <result column="EmpNo" jdbcType="CHAR" property="empno" />
+    <result column="EmpNm" jdbcType="VARCHAR" property="empnm" />
+    <result column="Email" jdbcType="VARCHAR" property="email" />
+    <result column="DeptId" jdbcType="CHAR" property="deptid" />
+    <result column="BfDeptId" jdbcType="CHAR" property="bfdeptid" />
+    <result column="RegTime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="LastModiEmpNo" jdbcType="VARCHAR" property="lastmodiempno" />
+    <result column="LastModiTime" jdbcType="TIMESTAMP" property="lastmoditime" />
+    <result column="LastLoginTime" jdbcType="TIMESTAMP" property="lastlogintime" />
+    <result column="LoginCnt" jdbcType="INTEGER" property="logincnt" />
+    <result column="ActiveFlag" jdbcType="CHAR" property="activeflag" />
+    <result column="LID" jdbcType="VARCHAR" property="lid" />
+    <result column="Werks" jdbcType="VARCHAR" property="werks" />
+    <result column="Firm" jdbcType="VARCHAR" property="firm" />
+  </resultMap>
+  <insert id="insert" parameterType="com.mys.example.demo.pojo.SysUser">
+    insert into sys_user (UserId, LogName, LogPwd, 
+      EmpNo, EmpNm, Email, DeptId, 
+      BfDeptId, RegTime, LastModiEmpNo, 
+      LastModiTime, LastLoginTime, LoginCnt, 
+      ActiveFlag, LID, Werks, 
+      Firm)
+    values (#{userid,jdbcType=CHAR}, #{logname,jdbcType=VARCHAR}, #{logpwd,jdbcType=VARCHAR}, 
+      #{empno,jdbcType=CHAR}, #{empnm,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{deptid,jdbcType=CHAR}, 
+      #{bfdeptid,jdbcType=CHAR}, #{regtime,jdbcType=TIMESTAMP}, #{lastmodiempno,jdbcType=VARCHAR}, 
+      #{lastmoditime,jdbcType=TIMESTAMP}, #{lastlogintime,jdbcType=TIMESTAMP}, #{logincnt,jdbcType=INTEGER}, 
+      #{activeflag,jdbcType=CHAR}, #{lid,jdbcType=VARCHAR}, #{werks,jdbcType=VARCHAR}, 
+      #{firm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mys.example.demo.pojo.SysUser">
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        UserId,
+      </if>
+      <if test="logname != null">
+        LogName,
+      </if>
+      <if test="logpwd != null">
+        LogPwd,
+      </if>
+      <if test="empno != null">
+        EmpNo,
+      </if>
+      <if test="empnm != null">
+        EmpNm,
+      </if>
+      <if test="email != null">
+        Email,
+      </if>
+      <if test="deptid != null">
+        DeptId,
+      </if>
+      <if test="bfdeptid != null">
+        BfDeptId,
+      </if>
+      <if test="regtime != null">
+        RegTime,
+      </if>
+      <if test="lastmodiempno != null">
+        LastModiEmpNo,
+      </if>
+      <if test="lastmoditime != null">
+        LastModiTime,
+      </if>
+      <if test="lastlogintime != null">
+        LastLoginTime,
+      </if>
+      <if test="logincnt != null">
+        LoginCnt,
+      </if>
+      <if test="activeflag != null">
+        ActiveFlag,
+      </if>
+      <if test="lid != null">
+        LID,
+      </if>
+      <if test="werks != null">
+        Werks,
+      </if>
+      <if test="firm != null">
+        Firm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=CHAR},
+      </if>
+      <if test="logname != null">
+        #{logname,jdbcType=VARCHAR},
+      </if>
+      <if test="logpwd != null">
+        #{logpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="empno != null">
+        #{empno,jdbcType=CHAR},
+      </if>
+      <if test="empnm != null">
+        #{empnm,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null">
+        #{deptid,jdbcType=CHAR},
+      </if>
+      <if test="bfdeptid != null">
+        #{bfdeptid,jdbcType=CHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodiempno != null">
+        #{lastmodiempno,jdbcType=VARCHAR},
+      </if>
+      <if test="lastmoditime != null">
+        #{lastmoditime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastlogintime != null">
+        #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logincnt != null">
+        #{logincnt,jdbcType=INTEGER},
+      </if>
+      <if test="activeflag != null">
+        #{activeflag,jdbcType=CHAR},
+      </if>
+      <if test="lid != null">
+        #{lid,jdbcType=VARCHAR},
+      </if>
+      <if test="werks != null">
+        #{werks,jdbcType=VARCHAR},
+      </if>
+      <if test="firm != null">
+        #{firm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
