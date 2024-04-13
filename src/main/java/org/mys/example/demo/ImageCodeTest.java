@@ -1,4 +1,4 @@
-package org.mys.example.demo.imageCode;
+package org.mys.example.demo;
 
 /**
  * <p>描述...</p>

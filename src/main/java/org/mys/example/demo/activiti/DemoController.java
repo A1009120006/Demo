@@ -1,10 +1,13 @@
 
-package org.mys.example.demo;
+package org.mys.example.demo.activiti;
 
+import org.mys.example.demo.User;
 import org.mys.example.demo.common.BaseRes;
 import org.mys.example.demo.common.ResUtil;
 import org.mys.example.demo.util.PinyinUtil;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
