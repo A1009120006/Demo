@@ -8,7 +8,7 @@
     <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
         <!-- 指定数据源 -->
         <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/activiti" />
-        <property name="jdbcDriver" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcDriver" value="com.mysql.cj.jdbc.Driver" />
         <property name="jdbcUsername" value="root" />
         <property name="jdbcPassword" value="leoc@123" />
         <property name="databaseSchemaUpdate" value="true" />

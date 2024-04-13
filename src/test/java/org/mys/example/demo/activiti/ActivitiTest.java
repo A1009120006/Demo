@@ -44,7 +44,7 @@ public class ActivitiTest {
         // 创建流程引擎
         ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 //		ProcessEngine processEngine = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml").buildProcessEngine();
-        System.out.println(processEngine);
+        System.out.println("processEngine = " + processEngine);
         // 得到流程存储服务组件
         RepositoryService repositoryService = processEngine.getRepositoryService();
         // 得到运行时服务组件
@@ -292,7 +292,7 @@ public class ActivitiTest {
      * 查看历史活动(包括开始节点和结束节点)
      */
     @Test
-    public void getHistory() {
+    void getHistory() {
         //获取HistoryService接口
         HistoryService historyService = processEngine.getHistoryService();
         //获取历史任务列表
@@ -310,7 +310,7 @@ public class ActivitiTest {
     }
     // 根据发布编号查询已经完成的历史任务记录
     @Test
-    public void queryHisByDeployId() {
+    void queryHisByDeployId() {
         String deployId ="5b0a5c4c-0b62-11ee-91ec-38d57a012850";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ProcessEngine engine = ProcessEngines.getDefaultProcessEngine();
@@ -341,7 +341,7 @@ public class ActivitiTest {
      * 查询历史流程变量 HistoricVariableInstance
      */
     @Test
-    public void findHistoryProcessVariables(){
+    void findHistoryProcessVariables(){
         String processInstanceId = "8769f060-0be4-11ee-a0d2-38d57a012850";
         List<HistoricVariableInstance> list = processEngine.getHistoryService()
                 .createHistoricVariableInstanceQuery()
@@ -359,7 +359,7 @@ public class ActivitiTest {
      * 查询历史任务的办理人表
      */
     @Test
-    public void findHistoryPersonTask() {
+    void findHistoryPersonTask() {
         //流程实例ID
         String processInstanceId = "8769f060-0be4-11ee-a0d2-38d57a012850";
         List<HistoricIdentityLink> list = processEngine.getHistoryService()
@@ -374,7 +374,7 @@ public class ActivitiTest {
 
     }
     @Test
-    public void startProcess(){
+    void startProcess(){
         //获得流程执行服务类对象
         RuntimeService runServ = processEngine.getRuntimeService();
         //启动流程的时候【动态设置每个步骤的执行人】,map的key值需要与Leave.bpmn中对应
@@ -386,6 +386,7 @@ public class ActivitiTest {
 
         System.out.println(pi.getId()+","+pi.getActivityId()+","+pi.getProcessDefinitionId()+","+pi.getProcessDefinitionKey()
                 +","+pi.getProcessDefinitionName()+","+pi.getBusinessKey()+","+pi.getName()+","+pi.getDeploymentId());
+        assert
     }
     /**
      * 设置和获取流程变量
