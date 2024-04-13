@@ -52,7 +52,7 @@ public class ActivitiTest {
         // 获取流程任务组件
         TaskService taskService = processEngine.getTaskService();
         // 部署流程定义文件
-        repositoryService.createDeployment().addClasspathResource("bpmn/first.bpmn").deploy();
+        repositoryService.createDeployment().addClasspathResource("bpmn/first.xml").deploy();
         // 启动流程
         runtimeService.startProcessInstanceByKey("myProcess");
         // 查询第一个任务
@@ -76,10 +76,9 @@ public class ActivitiTest {
 
         // 获取仓库服务，从类路径下完成部署
         Deployment deployment = repositoryService.createDeployment()
-                .addClasspathResource("processes/test.bpmn20.xml") // 添加定义的规则文件
-                .addClasspathResource("processes/test.png") // 添加定义的规则图片
+                .addClasspathResource("bpmn/first.xml") // 添加定义的规则文件
                 .name("提交请假流程")  // 部署规则的别名
-                .key("test-flow")
+                .key("leaveApply")
                 .deploy();
         System.out.println("流程部署id：" + deployment.getId());
         System.out.println("流程部署名称：" + deployment.getName());
@@ -106,7 +105,7 @@ public class ActivitiTest {
             System.out.println("name:"+pd.getName());
             System.out.println("key:"+pd.getKey());
             System.out.println("version:"+pd.getVersion());
-            System.out.println(""+pd.getResourceName());
+            System.out.println("resourceName"+pd.getResourceName());
             System.out.println("------------------------------");
         }
     }
@@ -386,7 +385,7 @@ public class ActivitiTest {
 
         System.out.println(pi.getId()+","+pi.getActivityId()+","+pi.getProcessDefinitionId()+","+pi.getProcessDefinitionKey()
                 +","+pi.getProcessDefinitionName()+","+pi.getBusinessKey()+","+pi.getName()+","+pi.getDeploymentId());
-        assert
+
     }
     /**
      * 设置和获取流程变量
