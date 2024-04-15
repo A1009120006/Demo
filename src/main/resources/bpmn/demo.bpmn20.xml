@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn"
-             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
-             typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath"
-             targetNamespace="http://www.activiti.org/processdef">
-    <process id="demo" name="demo" isExecutable="true">
-    </process>
-    <bpmndi:BPMNDiagram id="BPMNDiagram_demo">
-        <bpmndi:BPMNPlane bpmnElement="demo" id="BPMNPlane_demo">
-        </bpmndi:BPMNPlane>
-    </bpmndi:BPMNDiagram>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="demoDefineId" name="demoDefineName" isExecutable="true">
+    <startEvent id="start"/>
+    <userTask id="MannualTask1" name="不固定用户的处理节点" activiti:assignee="${userIds}"/>
+    <endEvent id="end"/>
+    <serviceTask id="SysTask2" activiti:exclusive="true" name="实现接口的系统处理节点" activiti:class="com.mys.example.demo.activiti.task.LogServiceTask"/>
+    <sequenceFlow id="start-usertask" sourceRef="start" targetRef="MannualTask1"/>
+    <sequenceFlow id="sid-00ae25a3-443d-4e6e-8889-bedfa78f5448" sourceRef="MannualTask1" targetRef="SysTask2"/>
+    <sequenceFlow id="sid-b4ccb1ab-7d34-491c-83a9-075b511d55ec" sourceRef="SysTask2" targetRef="end"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_demo">
+    <bpmndi:BPMNPlane bpmnElement="demo" id="BPMNPlane_demo">
+      <bpmndi:BPMNShape id="shape-ad26fd4c-685f-4831-b518-296ca48353e3" bpmnElement="start">
+        <omgdc:Bounds x="-40.0" y="-30.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-c724d0d6-7144-4194-8b08-68325ac01273" bpmnElement="MannualTask1">
+        <omgdc:Bounds x="35.0" y="-45.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-a926869a-5c72-494e-ae66-c23390e9cadd" bpmnElement="end">
+        <omgdc:Bounds x="325.0" y="-25.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-1d5456f0-c8d6-487b-9a7b-bd88979f0761" bpmnElement="start-usertask">
+        <omgdi:waypoint x="-10.0" y="-22.5"/>
+        <omgdi:waypoint x="35.0" y="-25.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-3c941e23-935d-4a63-adaa-79e01fb81e6a" bpmnElement="SysTask2">
+        <omgdc:Bounds x="240.0" y="60.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-75c36a49-96d2-495e-93e8-a9eb6b83c084" bpmnElement="sid-00ae25a3-443d-4e6e-8889-bedfa78f5448">
+        <omgdi:waypoint x="85.0" y="35.0"/>
+        <omgdi:waypoint x="240.00002" y="100.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-08874b32-74f2-4197-93a8-359504d9a014" bpmnElement="sid-98c9bfa7-4952-4d16-b04c-03b853787748">
+        <omgdi:waypoint x="255.0" y="30.0"/>
+        <omgdi:waypoint x="265.0" y="60.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-4e3c9b01-4e79-44f2-9551-d5c748e40dba" bpmnElement="sid-b4ccb1ab-7d34-491c-83a9-075b511d55ec">
+        <omgdi:waypoint x="315.0" y="60.0"/>
+        <omgdi:waypoint x="332.5" y="5.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
 </definitions>

@@ -1,16 +1,17 @@
 package com.mys.example.demo.activiti;
 
+import com.alibaba.fastjson.JSON;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.EndEvent;
 import org.activiti.bpmn.model.FlowNode;
 import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.engine.*;
 import org.activiti.engine.history.*;
-import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +50,7 @@ public class ActivitiTest {
     private static TaskService taskService = null;
     @BeforeAll
     public static void setup(){
+        //ProcessEngine processEngine = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml").buildProcessEngine();
         processEngine = ProcessEngines.getDefaultProcessEngine(); //流程引擎
         managementService = processEngine.getManagementService();//流程引擎的管理和维护功能
         runtimeService = processEngine.getRuntimeService();//执行管理，包括启动、推进、删除流程实例等操作
@@ -58,50 +60,87 @@ public class ActivitiTest {
         historyService = processEngine.getHistoryService();//历史管理(执行完的数据的管理)
         processEngineConfiguration = processEngine.getProcessEngineConfiguration(); //流程引擎配置信息
     }
-    @Test
-    void test1(){
-        // 创建流程引擎
-        ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-//		ProcessEngine processEngine = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml").buildProcessEngine();
-        System.out.println("processEngine = " + processEngine);
-        // 得到流程存储服务组件
-        RepositoryService repositoryService = processEngine.getRepositoryService();
-        // 得到运行时服务组件
-        RuntimeService runtimeService = processEngine.getRuntimeService();
-        // 获取流程任务组件
-        TaskService taskService = processEngine.getTaskService();
-        // 部署流程定义文件
-        repositoryService.createDeployment().addClasspathResource("bpmn/first.xml").deploy();
-        // 启动流程
-        runtimeService.startProcessInstanceByKey("myProcess");
-        // 查询第一个任务
-        Task task = taskService.createTaskQuery().singleResult();
-        System.out.println("第一个任务完成前，当前任务名称:"+task.getName());
-        // 完成第一个任务
-        taskService.complete(task.getId());
-        // 查询第二个任务
-        task = taskService.createTaskQuery().singleResult();
-        System.out.println("第二个任务完成前，当前任务名称:"+task.getName());
-        // 完成第二个任务(流程结束)
-        taskService.complete(task.getId());
-        task = taskService.createTaskQuery().singleResult();
-        System.out.println("流程结束后，查找任务：" + task);
 
+    /**
+     * 查询已完成/未完成的流程
+     */
+    @Test
+    void qryProcess(){
+        /**
+         * 查询未完成的流程
+         */
+        List<ProcessInstance> processInstanceList = runtimeService.createProcessInstanceQuery() // 流程实例查询
+//                .processInstanceBusinessKey("")//关联的业务表主键ID
+//                .processInstanceId(processInstance.getId())//根据流程实例id获取单个
+//                .processInstanceName("demoProcessInstanceName")//流程实例的名称，可能返回多个
+                .involvedUser("liuchuxing")
+                .orderByProcessInstanceId()
+                .desc()
+                .list(); // 唯一结果
+        for (ProcessInstance item : processInstanceList) {
+            System.out.println("  ====== 未完成流程 id=" + item.getId() + ", processInstansId=" + item.getProcessInstanceId() + ", name=" + item.getName() + ", startUserId=" + item.getStartUserId());
+        }
+
+        /**
+         * 查询已完成的流程
+         */
+        List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery()
+                .involvedUser("liuchuxing")
+                .orderByProcessInstanceEndTime().asc()
+                .list();
+
+        for (HistoricProcessInstance historicProcessInstance : historicProcessInstances) {
+            System.out.println("  ====== 已完成流程实例ID: " + historicProcessInstance.getId() + ", 结束时间: " + historicProcessInstance.getEndTime() + "信息 = " + JSON.toJSONString(historicProcessInstance));
+        }
+        Assertions.assertTrue(true);
     }
 
-    @Test //部署（Deployment）流程
-    void deploy(){
-        RepositoryService repositoryService = processEngine.getRepositoryService();
-
-        // 获取仓库服务，从类路径下完成部署
-        Deployment deployment = repositoryService.createDeployment()
-                .addClasspathResource("bpmn/first.xml") // 添加定义的规则文件
-                .name("提交请假流程")  // 部署规则的别名
-                .key("leaveApply")
+    /**
+     * 部署流程，并新建一个流程
+     */
+    @Test
+    void deployAndStartProcess(){
+        // 部署流程
+        repositoryService.createDeployment()
+                .addClasspathResource("bpmn/demo.bpmn20.xml")
+                .key("demoDefineId")
+                .name("测试流程")  // 部署规则的别名
                 .deploy();
-        System.out.println("流程部署id：" + deployment.getId());
-        System.out.println("流程部署名称：" + deployment.getName());
-        System.out.println("key:"+deployment.getKey());
+        /**
+         * 新建流程
+         */
+        Map<String, Object> vars = new HashMap<>();
+        vars.put("userIds", "liuchuxing");
+        //key 流程定义的
+        //多次对同一个流程变量赋值时，流程变量的值不会更新，即后面的赋值永远是不生效的
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("demoDefineId", vars);
+        // 设置变量
+        runtimeService.setVariable(processInstance.getId(),"var1","value1");
+        runtimeService.setProcessInstanceName(processInstance.getId(),"demoProcessInstanceName");
+        System.out.println("  ====== 新建流程：" + processInstance.getId() + "," + processInstance.getProcessInstanceId() + "," + processInstance.getName() );
+        Assertions.assertTrue(true);
+    }
+
+    /**
+     * 任务处理：完成这一节点任务。当所有任务处理完毕，对应当前流程实例信息删除，但是可以在历史中查看到该信息
+     */
+    @Test
+    void completeTask(){
+
+        // 查询待办流程
+        // 分页：List<Task> list = taskService.createTaskQuery().taskAssignee("小红").processDefinitionKey("test").listPage(i,j);
+        List<Task> list = taskService.createTaskQuery() //查询任务
+                .taskAssignee("liuchuxing") // 查询待办个人任务
+//                .taskCandidateOrAssigned("lisi")  // 查询所有待办任务（个人、组任务）
+//                .taskCandidateUser("小红")// 查询待办组任务
+//                .processDefinitionKey("demoDefineId") //流程定义ID
+                .list();
+
+        for (Task task : list) {
+            System.out.println("====== 待办流程 名称：" + task.getName() + "," + "执行人：" + task.getAssignee() + "," + "流程ID：" + task.getId() + "," + "实例ID：" + task.getProcessInstanceId());
+            taskService.complete(task.getId());//审批此流程任务节点
+        }
+        Assertions.assertTrue(true);
     }
 
     @Test //查看流程定义 （ProcessDefinition）
@@ -134,16 +173,6 @@ public class ActivitiTest {
         ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
         RepositoryService repositoryService = processEngine.getRepositoryService();
         repositoryService.deleteDeployment(id);
-    }
-    @Test //开启流程
-    public void startProcess_test(){
-        //获得流程执行服务类对象
-        RuntimeService runServ = processEngine.getRuntimeService();
-        //启动流程
-        ProcessInstance pi = runServ.startProcessInstanceByKey("test");
-
-        System.out.println(pi.getId()+","+pi.getActivityId()+","+pi.getProcessDefinitionId()+","+pi.getProcessDefinitionKey()
-                +","+pi.getProcessDefinitionName()+","+pi.getBusinessKey()+","+pi.getName()+","+pi.getDeploymentId());
     }
 
     @Test //查询流程实例
@@ -186,28 +215,6 @@ public class ActivitiTest {
         System.out.println("激活成功");
     }
     /**
-     * 查看代办任务
-     */
-    @Test
-    public void getTodoTask() {
-        //获取一个TaskService对象
-        TaskService taskService = processEngine.getTaskService();
-        //查询代办业务
-        List<Task> list = taskService.createTaskQuery() //查询任务
-                .taskAssignee("小红") // 查询待办个人任务
-//                .taskCandidateOrAssigned("lisi")  // 查询所有待办任务（个人、组任务）
-//                .taskCandidateUser("小红")// 查询待办组任务
-                .processDefinitionKey("test") //processDefinitionKey：查询流程
-                .list();
-        //分页：List<Task> list = taskService.createTaskQuery().taskAssignee("小红").processDefinitionKey("test").listPage(i,j);
-        for (Task task : list) {
-            System.out.println("任务名称：" + task.getName());
-            System.out.println("任务执行人：" + task.getAssignee());
-            System.out.println("任务ID：" + task.getId());
-            System.out.println("流程实例ID：" + task.getProcessInstanceId());
-        }
-    }
-    /**
      * 查询正在执行的任务办理人表
      */
     @Test
@@ -224,17 +231,6 @@ public class ActivitiTest {
                 System.out.println( "identityLinkType:" + identityLink.getType() + "   UserId:" + identityLink.getUserId());
             }
         }
-    }
-    /**
-     * 任务处理：完成这一节点任务。当所有任务处理完毕，对应当前流程实例信息删除，但是可以在历史中查看到该信息
-     */
-    @Test
-    public void completeTask() {
-        //获取一个TaskService对象
-        TaskService taskService = processEngine.getTaskService();
-        //任务处理,传任务id
-        taskService.complete("1ae429da-0be9-11ee-9e49-38d57a012850");
-
     }
     /**
      * 流程转办
@@ -389,21 +385,6 @@ public class ActivitiTest {
                 System.out.println( "identityLinkType:" + identityLink.getType() + "   UserId:" + identityLink.getUserId());
             }
         }
-
-    }
-    @Test
-    void startProcess(){
-        //获得流程执行服务类对象
-        RuntimeService runServ = processEngine.getRuntimeService();
-        //启动流程的时候【动态设置每个步骤的执行人】,map的key值需要与Leave.bpmn中对应
-        Map<String, Object> variables=new HashMap<String, Object>();
-        variables.put("user1", "张三");
-        variables.put("user2", "李四");
-        //启动流程得到流程实例,对应act_ru_execution表
-        ProcessInstance pi= runServ.startProcessInstanceByKey("test","aaa", variables);
-
-        System.out.println(pi.getId()+","+pi.getActivityId()+","+pi.getProcessDefinitionId()+","+pi.getProcessDefinitionKey()
-                +","+pi.getProcessDefinitionName()+","+pi.getBusinessKey()+","+pi.getName()+","+pi.getDeploymentId());
 
     }
     /**
