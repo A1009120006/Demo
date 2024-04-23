@@ -25,3 +25,14 @@ spring:
     process-definition-location-suffixes: #流程文件格式
       - .bpmn20.xml
       - .bpmn
+sap:
+  ashost: 10.0.0.25
+  sysnr: 00
+  client: 100
+  user: JOBUSER
+  password: myssap2018
+  language: en
+  peak-limit: 10
+  pool-capacity: 3
+
+

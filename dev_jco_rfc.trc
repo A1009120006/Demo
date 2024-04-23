@@ -1,0 +1,51 @@
+
+**** Error file opened at 20240422 161730 China Standard Time Rel 3.0.11 (2014-04-15) [721.913]
+Error:  >Mon Apr 22 16:17:30,779<    >RfcGetException rc (7) message: Client 800 is not available in this system
+<RfcGetException
+
+Error:  >Mon Apr 22 16:17:51,791<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS2 ASHOST=192.168.111.123 SYSNR=00 PCS=1
+
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.111.123:3300' not reached
+TIME        Mon Apr 22 16:17:51 2024
+RELEASE     721
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3289
+DETAIL      NiPConnect2: 192.168.111.123:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     3
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
+
+**** Error file opened at 20240422 161820 China Standard Time Rel 3.0.11 (2014-04-15) [721.913]
+Error:  >Mon Apr 22 16:18:20,248<    RfcException:
+    message: Connect to SAP gateway failed
+Connection parameters: TYPE=A DEST=ABAP_AS2 ASHOST=192.168.111.123 SYSNR=00 PCS=1
+
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.111.123:3300' not reached
+TIME        Mon Apr 22 16:18:20 2024
+RELEASE     721
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      nixxi.cpp
+LINE        3289
+DETAIL      NiPConnect2: 192.168.111.123:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     3
+
+    return code: RFC_FAILURE (1)
+    error group: 102
+    key: RFC_ERROR_COMMUNICATION
