@@ -1,4 +1,4 @@
-package com.mys.example.demo.sap1;
+package com.mys.example.demo.sap;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Builder
 @Data

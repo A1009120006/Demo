@@ -8,6 +8,7 @@ import com.sap.conn.jco.ext.DestinationDataProvider;
 
 public class MysDestinationDataProvider implements DestinationDataProvider {
 
+    public static final String DEFAULT_DESTINATION_NAME = "MYS_SAP";
     private DestinationDataEventListener destinationDataEventListener;
     private HashMap<String, Properties> destinations;
 
@@ -53,6 +54,9 @@ public class MysDestinationDataProvider implements DestinationDataProvider {
         synchronized (destinations) {
             destinations.put(destinationName, properties);
         }
+    }
+    public void addDestination(Properties properties) {
+        addDestination(DEFAULT_DESTINATION_NAME, properties);
     }
 
 }

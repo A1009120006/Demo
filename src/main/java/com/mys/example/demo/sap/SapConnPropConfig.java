@@ -1,10 +1,10 @@
-package com.mys.example.demo.sap1;
+package com.mys.example.demo.sap;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static com.mys.example.demo.sap1.SapConnPropConfig.PREFIX;
+import static com.mys.example.demo.sap.SapConnPropConfig.PREFIX;
 
 @ConfigurationProperties(prefix = PREFIX)
 @Component
