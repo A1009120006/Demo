@@ -1,5 +1,6 @@
 package com.mys.example.demo.sap1;
 
+import com.alibaba.fastjson.JSONObject;
 import com.sap.conn.jco.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,9 @@ public class BasicController {
  
         //2.设置输入参数（如果有）
          JCoParameterList importParameterList = function.getImportParameterList();
-         importParameterList.setValue("I_MO",I_MO);
+        JSONObject param = new JSONObject();
+        param.put("I_MO", I_MO);
+        param.forEach(importParameterList::setValue);
  
         //3.调用并获取返回值
         JCoResponse response = new DefaultRequest(function).execute(client.getDestination());

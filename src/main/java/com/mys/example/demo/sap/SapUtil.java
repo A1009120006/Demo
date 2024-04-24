@@ -1,5 +1,6 @@
 package com.mys.example.demo.sap;
 
+import com.alibaba.fastjson.JSONObject;
 import com.sap.conn.jco.*;
 
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 import static com.mys.example.demo.sap.SapConfig.MYS_DEFAULT_DESTINATION;
 
 public class SapUtil {
-    public static JCoTable calFunction(String functionName, String tableName, Map<String, Object> param){
+    public static JCoTable calFunction(String functionName, String tableName, JSONObject param){
             JCoFunction function = null;
             JCoDestination destination = null;
             int result = 0;//调用接口返回状态
