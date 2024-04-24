@@ -43,22 +43,23 @@ public class JCoClient{
                     String colName = metaData.getName(colIndex);
                     int colType = metaData.getType(colIndex);
                     switch (colType) {
-                        case 8:
-                        case 9:
-                        case 10:
+                        case JCoMetaData.TYPE_INT:
+                        case JCoMetaData.TYPE_INT1:
+                        case JCoMetaData.TYPE_INT2:
                             // int类型
-//                            rowMap.put(colName, table.getInt(colName));
-//                            break;
-                        case 6:
-                        case 7:
+                            rowMap.put(colName, table.getInt(colName));
+                            break;
+                        case JCoMetaData.TYPE_NUM:
+                        case JCoMetaData.TYPE_FLOAT:
+                        case JCoMetaData.TYPE_BCD: //Binary Coded Decimal 二进制编码小数
                             // double类型
-//                            rowMap.put(colName, table.getString(colName));
-//                            break;
-                        case 1:
-                        case 3:
+                            rowMap.put(colName, table.getDouble(colName));
+                            break;
+                        case JCoMetaData.TYPE_DATE:
+                        case JCoMetaData.TYPE_TIME:
                             //date类型
-//                            rowMap.put(colName, table.getString(colName));
-//                            break;
+                            rowMap.put(colName, table.getDate(colName));
+                            break;
                         default:
                             //其他类型都转为string，后续根据需要分开
                             rowMap.put(colName, table.getString(colName));
