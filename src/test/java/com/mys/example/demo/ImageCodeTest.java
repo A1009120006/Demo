@@ -1,6 +1,6 @@
 package com.mys.example.demo;
 
-import com.mys.example.demo.util.ImageCodeUtil;
+import com.mys.example.demo.framework.util.ImageCodeUtil;
 
 /**
  * <p>描述...</p>

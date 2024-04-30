@@ -1,0 +1,45 @@
+server:
+  port: 8080
+#日志配置
+logging:
+  config: classpath:logback-spring.xml
+jwt:
+  secret: 6913cbb4bbfc53feb70b06ed00cd47ea
+  ## 过期时间 单位分钟，整数
+  exp: 1440
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: leoc@123
+    #    加上nullCatalogMeansCurrent=true才能自动创建activiti需要的表
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+  mybatis:
+    mapper-locations: classpath:mapper/*.xml
+    #目的是为了省略resultType里的代码量
+    type-aliases-package: com.chf.pojo
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  elasticsearch:
+    uris: localhost:9200
+  # activiti工作流配置
+  activiti:
+    db-history-used: true
+    check-process-definitions: false  #自动检查、部署流程定义文件
+    database-schema-update: true #自动更新数据库结构
+    history-level: full #保存历史数据级别设置为full最高级别，便于历史数据的追溯
+    process-definition-location-prefix: classpath:/bpmn/ #流程定义文件存放目录
+    process-definition-location-suffixes: #流程文件格式
+      - .bpmn20.xml
+      - .bpmn
+sap:
+  ashost: 10.0.0.25
+  sysnr: 00
+  client: 100
+  user: JOBUSER
+  password: myssap2018
+  language: en
+  peak-limit: 10
+  pool-capacity: 3
+
+

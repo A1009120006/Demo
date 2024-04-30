@@ -1,4 +1,4 @@
-package com.mys.example.demo.common;
+package com.mys.example.demo.framework.common;
 
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -25,7 +25,7 @@ public class ResUtil {
         return res;
     }
     /**失败**/
-    public static BaseRes<Object>error(){
+    public static BaseRes<Object> error(){
         return error(ResEnum.UNKNOWN_ERROR);
     }
     /**失败**/

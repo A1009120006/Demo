@@ -1,4 +1,4 @@
-package com.mys.example.demo.util;
+package com.mys.example.demo.framework.util;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;

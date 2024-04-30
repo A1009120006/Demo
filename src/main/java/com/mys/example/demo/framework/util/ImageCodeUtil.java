@@ -1,4 +1,4 @@
-package com.mys.example.demo.util;
+package com.mys.example.demo.framework.util;
 
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;

@@ -1,4 +1,4 @@
-package com.mys.example.demo.common;
+package com.mys.example.demo.framework.common;
 
 import lombok.Data;
 

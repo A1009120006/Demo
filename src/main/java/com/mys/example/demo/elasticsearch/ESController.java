@@ -12,8 +12,8 @@ import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
 import com.alibaba.fastjson.JSON;
-import com.mys.example.demo.common.BaseRes;
-import com.mys.example.demo.common.ResUtil;
+import com.mys.example.demo.framework.common.BaseRes;
+import com.mys.example.demo.framework.common.ResUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

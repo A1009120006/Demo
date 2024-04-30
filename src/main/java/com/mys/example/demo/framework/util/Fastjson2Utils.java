@@ -1,4 +1,4 @@
-package com.mys.example.demo.util;
+package com.mys.example.demo.framework.util;
 
 import com.alibaba.fastjson2.*;
 import com.alibaba.fastjson2.reader.ObjectReaderProvider;
