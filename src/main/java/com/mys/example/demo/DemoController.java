@@ -17,6 +17,6 @@ public class DemoController {
 //        SysUser = sysUserDao.
 //        String pinyinName = PinyinUtil.getFullSpell(user.getName());
 //        user.setName(pinyinName);
-//        return ResUtil.success(user);
+//        return BaseRes.success(user);
 //    }
 }

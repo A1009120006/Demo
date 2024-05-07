@@ -1,8 +1,7 @@
 package com.mys.example.demo.sap;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mys.example.demo.framework.common.BaseRes;
-import com.mys.example.demo.framework.common.ResUtil;
+import com.mys.example.demo.framework.common.Res;
 import com.sap.conn.jco.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,16 +18,16 @@ public class BasicController {
     // http://localhost:8080/executeFunction?ZGET_MO_DETAIL&tableName=IT_MO&I_MO=1120083975
     @RequestMapping("/executeFunction")
     @ResponseBody
-    public BaseRes<Object> executeFunction(@RequestParam(name = "functionName", defaultValue = "defaultValue") String functionName,
-                                           @RequestParam(name = "tableName", defaultValue = "defaultValue") String tableName,
-                                           @RequestParam(name = "I_MO", defaultValue = "defaultValue") String I_MO) throws JCoException {
+    public Res<Object> executeFunction(@RequestParam(name = "functionName", defaultValue = "defaultValue") String functionName,
+                                       @RequestParam(name = "tableName", defaultValue = "defaultValue") String tableName,
+                                       @RequestParam(name = "I_MO", defaultValue = "defaultValue") String I_MO) throws JCoException {
 
         JSONObject param = new JSONObject();
         param.put("I_MO", I_MO);
         // functionName=ZGET_MO_DETAIL&tableName=IT_MO&I_MO=1120083975
         Object result = JCoClient.callFunction(functionName,tableName, param);
 
-        return ResUtil.success(result);
+        return Res.success(result);
     }
  
 }

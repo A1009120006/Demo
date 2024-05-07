@@ -4,6 +4,7 @@ public enum ResEnum {
     //这里是可以自己定义的，方便与前端交互即可
     SUCCESS(1,"成功"),
     FAIL(0,"失败"),
+    DEFAULT_ERROR(900,"未知错误"),
     UNKNOWN_ERROR(999,"未知错误"),
     ;
 

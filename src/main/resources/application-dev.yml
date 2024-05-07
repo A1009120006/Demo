@@ -8,6 +8,11 @@ jwt:
   ## 过期时间 单位分钟，整数
   exp: 1440
 spring:
+  # 配置文件上传大小限制
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
@@ -42,4 +47,10 @@ sap:
   peak-limit: 10
   pool-capacity: 3
 
+#MinIO配置
+minio:
+  endpoint: http://127.0.0.1:9000
+  accessKey: liuchuxing
+  secretKey: leoc@123
+  bucketName: srm-default
 

@@ -12,8 +12,7 @@ import co.elastic.clients.elasticsearch.core.bulk.BulkResponseItem;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
 import com.alibaba.fastjson.JSON;
-import com.mys.example.demo.framework.common.BaseRes;
-import com.mys.example.demo.framework.common.ResUtil;
+import com.mys.example.demo.framework.common.Res;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -113,7 +112,7 @@ public class ESController {
      */
     @GetMapping("/queryAll")
     @SuppressWarnings("unchecked")
-    public BaseRes<Object> queryAll() throws IOException {
+    public Res<Object> queryAll() throws IOException {
         List userList = new LinkedList<>();
         SearchResponse<UserVo> searchResponse = elasticsearchClient.search(searchRequestBuilder ->{
             searchRequestBuilder
@@ -136,12 +135,12 @@ public class ESController {
             assert hit.source() != null;
             userList.add(hit.source());
         }
-        return ResUtil.success(userList);
+        return Res.success(userList);
     }
 
     @GetMapping("/fuzzQuery")
     @SuppressWarnings("unchecked")
-    public BaseRes<Object> fuzzQuery(@RequestParam("userName") String userName) throws IOException {
+    public Res<Object> fuzzQuery(@RequestParam("userName") String userName) throws IOException {
         List userList = new LinkedList<>();
         //模糊查询
         SearchResponse<UserVo> searchResponse = elasticsearchClient.search(srBuilder -> srBuilder
@@ -163,7 +162,7 @@ public class ESController {
             userList.add(hit.source());
         }
         assert hitsMetadata.total() != null;
-        return ResUtil.success(userList);
+        return Res.success(userList);
     }
 
     /**

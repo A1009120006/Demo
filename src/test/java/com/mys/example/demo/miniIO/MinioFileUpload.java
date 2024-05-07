@@ -28,17 +28,28 @@ public class MinioFileUpload {
 //            }
 
             //上传文件
-            minioClient.uploadObject(UploadObjectArgs.builder()
-                    .bucket(bucketName)
-                    .object("test.mp4")
-                    .filename("F:\\docs\\test.mp4")
-                    .build());
+            for(int i = 0; i < 100; i++) {
+                minioClient.uploadObject(UploadObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object("test"+i+".mp4")
+                        .filename("F:\\docs\\test.mp4")
+                        .build());
+            }
 
             //下载文件
-            minioClient.downloadObject(DownloadObjectArgs.builder()
-                    .bucket(bucketName)
-                    .object("test.mp4")
-                    .filename("F:\\docs\\test1.mp4").build());
+//            minioClient.downloadObject(DownloadObjectArgs.builder()
+//                    .bucket(bucketName)
+//                    .object("test.mp4")
+//                    .filename("F:\\docs\\test1.mp4").build());
+
+            //删除文件
+//            for(int i = 0; i < 100; i++) {
+//                minioClient.uploadObject(UploadObjectArgs.builder()
+//                        .bucket(bucketName)
+//                        .object("test"+i+".mp4")
+//                        .filename("F:\\docs\\test.mp4")
+//                        .build());
+//            }
 
         }catch (Exception e){
             e.printStackTrace();
