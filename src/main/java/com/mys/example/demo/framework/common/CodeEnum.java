@@ -1,6 +1,6 @@
 package com.mys.example.demo.framework.common;
 
-public enum ResEnum {
+public enum CodeEnum {
     //这里是可以自己定义的，方便与前端交互即可
     SUCCESS(1,"成功"),
     FAIL(0,"失败"),
@@ -11,7 +11,7 @@ public enum ResEnum {
     private Integer code;
     private String message;
 
-    ResEnum(Integer code, String message){
+    CodeEnum(Integer code, String message){
         this.code = code;
         this.message = message;
     }

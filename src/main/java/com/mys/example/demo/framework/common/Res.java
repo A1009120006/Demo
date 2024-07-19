@@ -1,5 +1,6 @@
 package com.mys.example.demo.framework.common;
 
+import com.mys.example.demo.framework.exception.BussException;
 import lombok.Data;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -21,8 +22,8 @@ public class Res<T> {
 
     private T data;
 
-    public Res(ResEnum resEnum) {
-        this(resEnum.getCode(), resEnum.getMessage());
+    public Res(CodeEnum codeEnum) {
+        this(codeEnum.getCode(), codeEnum.getMessage());
     }
     public Res(Integer code, String message) {
         this(code, message, (T)null);
@@ -51,18 +52,24 @@ public class Res<T> {
 
         Res<T> res = new Res<>();
         res.setRequestId(requestId);
-        res.setCode(ResEnum.SUCCESS.getCode());
-        res.setMessage(ResEnum.SUCCESS.getMessage());
+        res.setCode(CodeEnum.SUCCESS.getCode());
+        res.setMessage(CodeEnum.SUCCESS.getMessage());
         res.setData(object);
         return res;
     }
-    /**失败**/
-    public static <T> Res<T> error(){
-        return error(ResEnum.UNKNOWN_ERROR);
+    public static <T> Res<T> exception(BussException exception){
+        Res<T> result = new Res<>(exception.getCode(), exception.getMessage());
+        String requestId = getRequestHeaderValue("requestId");
+        result.setRequestId(requestId);
+        return result;
     }
     /**失败**/
-    public static <T> Res<T> error(ResEnum resEnum){
-        Res<T> result = new Res<>(resEnum);
+    public static <T> Res<T> error(){
+        return error(CodeEnum.UNKNOWN_ERROR);
+    }
+    /**失败**/
+    public static <T> Res<T> error(CodeEnum codeEnum){
+        Res<T> result = new Res<>(codeEnum);
         String requestId = getRequestHeaderValue("requestId");
         result.setRequestId(requestId);
         return result;
@@ -75,7 +82,7 @@ public class Res<T> {
         return result;
     }
     public static <T> Res<T> error(String message){
-        Res<T> result = new Res<>(ResEnum.DEFAULT_ERROR.getCode(), message);
+        Res<T> result = new Res<>(CodeEnum.DEFAULT_ERROR.getCode(), message);
         String requestId = getRequestHeaderValue("requestId");
         result.setRequestId(requestId);
         return result;
